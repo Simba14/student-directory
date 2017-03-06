@@ -58,8 +58,7 @@ def input_students
     end
 
     # add the student hash to the array
-    add_students(name, cohort = :november)
-    @students << {name: name, cohort: cohort}
+    add_students(name, cohort)
     if @students.count == 1
       puts "Now we have #{@students.count} student"
     else
