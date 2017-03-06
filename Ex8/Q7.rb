@@ -15,7 +15,7 @@ def input_students
     puts "What cohort is #{name} part of?"
     cohort = gets.chomp
     if cohort.empty?
-        cohort = "November"
+        cohort = :november
     else
         cohort = cohort.to_sym
     end
@@ -26,11 +26,11 @@ def input_students
     # get age
     puts "And how old is #{name}?"
     age = gets.chomp
-    if age.is_a?(Numeric) != true
+    begin
+    age = Integer(gets.chomp)
+    rescue
       puts "That's not a number. Try again"
-      age = gets.chomp
-    else
-      exit
+      retry
     end
     # add the student hash to the array
     students << {name: name, cohort: cohort, nationality: nationality, age: age}
