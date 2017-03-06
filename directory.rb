@@ -147,4 +147,5 @@ def load_students(filename = "/Users/seanblundell/Documents/DevDev/Projects/stud
   file.close
 end
 
+try_load_students
 interactive_menu
