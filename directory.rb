@@ -2,7 +2,7 @@
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -43,14 +43,14 @@ def input_students
   puts "To finish, just hit return twice."
   # get the first name
   puts "Please enter the name of the first student."
-  name = gets.delete("\n")
+  name = STDIN.gets.delete("\n")
   nationality = "Unknown"
 
   # while the name is not empty, repeat this code
   while !name.empty? do
     # get cohort
     puts "What cohort is #{name} part of?"
-    cohort = gets.delete("\n")
+    cohort = STDIN.gets.delete("\n")
     if cohort.empty?
         cohort = :november
     else
@@ -59,11 +59,11 @@ def input_students
 
     # get nationality
     puts "What is #{name}'s nationality?'"
-    nationality = gets.delete("\n")
+    nationality = STDIN.gets.delete("\n")
     # get age
     puts "And how old is #{name}?"
     begin
-    age = Integer(gets.delete("\n"))
+    age = Integer(STDIN.gets.delete("\n"))
     rescue
       puts "That's not a number. Try again"
       retry
@@ -77,7 +77,7 @@ def input_students
     end
     # get another name from the user
     puts "Please enter another student's name or press enter to finish."
-    name = gets.delete("\n")
+    name = STDIN.gets.delete("\n")
   end
   #return the array of students
   @students
@@ -126,8 +126,20 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("/Users/seanblundell/Documents/DevDev/Projects/student-directory/.gitignore/students.csv", "r")
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
+def load_students(filename = "/Users/seanblundell/Documents/DevDev/Projects/student-directory/.gitignore/students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
