@@ -65,7 +65,12 @@ end
 
 def print_footer(students)
   puts "-------------".center(100)
-  puts "Overall, we have #{students.count} great students!".center(100)
+  if students.count == 1
+    puts "Overall, we have #{students.count} student"
+  else
+    puts "Overall, we have #{students.count} great students!".center(100)
+  end
+
 end
 
 # nothing happens until we call the methods
